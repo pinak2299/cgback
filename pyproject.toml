@@ -1,6 +1,6 @@
 [project]
 name = "cgback"
-version = "1.0.0"
+version = "1.0.1"
 description = "Deep learning tool for backmapping coarse-grained to all-atom"
 readme = "README.md"
 authors = [
