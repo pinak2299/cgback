@@ -45,7 +45,7 @@ To install PyTorch for a specific CUDA version, please use the appropriate index
 For **CUDA 11.8**:
 ```bash
 # using pip
-pip install cgback --index-url https://download.pytorch.org/whl/cu118
+pip install cgback --extra-index-url https://download.pytorch.org/whl/cu118
 
 # using uv
 uv tool install cgback --index pytorch=https://download.pytorch.org/whl/cu118
@@ -54,7 +54,7 @@ uv tool install cgback --index pytorch=https://download.pytorch.org/whl/cu118
 For **CUDA 12.1**:
 ```bash
 # using pip
-pip install cgback --index-url https://download.pytorch.org/whl/cu121
+pip install cgback --extra-index-url https://download.pytorch.org/whl/cu121
 
 # using uv
 uv tool install cgback --index pytorch=https://download.pytorch.org/whl/cu121
@@ -63,7 +63,7 @@ uv tool install cgback --index pytorch=https://download.pytorch.org/whl/cu121
 For **CUDA 12.4**:
 ```bash
 # using pip
-pip install cgback --index-url https://download.pytorch.org/whl/cu124
+pip install cgback --extra-index-url https://download.pytorch.org/whl/cu124
 
 # using uv
 uv tool install cgback --index pytorch=https://download.pytorch.org/whl/cu124
@@ -72,7 +72,7 @@ uv tool install cgback --index pytorch=https://download.pytorch.org/whl/cu124
 For **CUDA 12.6**:
 ```bash
 # using pip
-pip install cgback --index-url https://download.pytorch.org/whl/cu126
+pip install cgback --extra-index-url https://download.pytorch.org/whl/cu126
 
 # using uv
 uv tool install cgback --index pytorch=https://download.pytorch.org/whl/cu126
@@ -81,7 +81,7 @@ uv tool install cgback --index pytorch=https://download.pytorch.org/whl/cu126
 For **CUDA 12.8**:
 ```bash
 # using pip
-pip install cgback --index-url https://download.pytorch.org/whl/cu128
+pip install cgback --extra-index-url https://download.pytorch.org/whl/cu128
 
 # using uv
 uv tool install cgback --index pytorch=https://download.pytorch.org/whl/cu128
@@ -119,7 +119,7 @@ Example of an installation using PyTorch and OpenMM, both only with CPU support:
 
 ```bash
 # using pip
-pip install 'cgback[openmm]' --index-url https://download.pytorch.org/whl/cpu
+pip install 'cgback[openmm]' --extra-index-url https://download.pytorch.org/whl/cpu
 
 # using uv
 uv tool install 'cgback[openmm]' --index pytorch=https://download.pytorch.org/whl/cpu
@@ -129,7 +129,7 @@ Example of an installation using PyTorch with CUDA 12.6 and OpenMM with CUDA 12:
 
 ```bash
 # using pip
-pip install 'cgback[openmm-cuda12]' --index-url https://download.pytorch.org/whl/cu126
+pip install 'cgback[openmm-cuda12]' --extra-index-url https://download.pytorch.org/whl/cu126
 
 # using uv
 uv tool install 'cgback[openmm-cuda12]' --index pytorch=https://download.pytorch.org/whl/cu126
