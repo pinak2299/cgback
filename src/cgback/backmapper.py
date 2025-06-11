@@ -363,7 +363,7 @@ class Backmapper:
         num_chiral_centers = calculate_num_chiral_centers(system)
         self.logger.info(f"Number of chiral centers: {num_chiral_centers}")
 
-        # Step 4: calculate pairs of possible clahses
+        # Step 4: calculate pairs of possible clashes
         neighbor_clash_list = build_clash_neighbor_list(system)
 
         # Step 4: calculate pairs of possible penetrations
