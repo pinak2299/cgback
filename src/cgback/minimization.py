@@ -29,7 +29,7 @@ class CustomMinimizationReporter(MinimizationReporter):
         return False
 
 
-def energy_minimization(cgback_system: System, cutoff: float = 30.0, iterations: int = 0, tolerance: float = 10.0, log_interval: int = 50, ignore_existing: bool = False, logger: Logger | None = None) -> None:
+def energy_minimization(cgback_system: System, cutoff: float = 30.0, iterations: int = 0, tolerance: float = 10.0, log_interval: int = 50, ignore_existing: bool = False, device: str = "auto", logger: Logger | None = None) -> None:
     with tempfile.NamedTemporaryFile() as tmp:
         write_cif_from_system(pathlib.Path(tmp.name), cgback_system)
         pdb = PDBxFile(tmp.name)
@@ -53,7 +53,16 @@ def energy_minimization(cgback_system: System, cutoff: float = 30.0, iterations:
     platform_names = []
     for i in range(Platform.getNumPlatforms()):
         platform_names.append(Platform.getPlatform(i).getName())
-    platform_name = "CUDA" if "CUDA" in platform_names else "OpenCL" if "OpenCL" in platform_names else "CPU"
+    if device == "auto":
+        platform_name = "CUDA" if "CUDA" in platform_names else "OpenCL" if "OpenCL" in platform_names else "CPU"
+    elif device == "opencl":
+        platform_name = "OpenCL" if "OpenCL" in platform_names else "CPU"
+        if platform_name == "CPU" and logger is not None: logger.warning("OpenCL not supported in OpenMM. Setting device to CPU.")
+    elif device == "cuda":
+        platform_name = "CUDA" if "CUDA" in platform_names else "CPU"
+        if platform_name == "CPU" and logger is not None: logger.warning("CUDA not supported in OpenMM. Setting device to CPU.")
+    elif device == "cpu":
+        platform_name = "CPU"
     platform = Platform.getPlatformByName(platform_name)
     if logger is not None: logger.info(f"Performing energy minimization with platform '{platform_name}'")
 

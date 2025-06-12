@@ -24,6 +24,7 @@ def main() -> None:
     parser.add_argument("--diffuser", metavar="DIFFUSER", type=str, choices=["DDPM", "DDIM"], default="DDPM", help="Diffuser type (default: DDPM, choices=['DDPM', 'DDIM'])")
     parser.add_argument("--fix-structure-model", metavar="MODEL", type=str, choices=["S", "M", "L"], default="M", help="Model size for fixing structure artifacts (default: M, choices=['S', 'M', 'L'])")
     parser.add_argument("--fix-structure-max-iterations", metavar="NUMBER", type=int, default=1000, help="Max number of iterations for fixing structure artifacts (default: 1000)")
+    parser.add_argument("--energy-minimization-device", metavar="DEVICE", type=str, choices=["auto", "cpu", "cuda", "opencl"], default="auto", help="Device for minimization (default: auto, choices=['auto', 'cpu', 'cuda', 'opencl'])")
     parser.add_argument("--energy-minimization-cutoff", metavar="NUMBER", type=float, default=30.0, help="Cutoff distance in angstroms (default: 30.0)")
     parser.add_argument("--energy-minimization-tolerance", metavar="NUMBER", type=float, default=10.0, help="Tolerance in kJ/mol for OpenMM energy minimization (default: 10.0)")
     parser.add_argument("--energy-minimization-max-iterations", metavar="NUMBER", type=int, default=0, help="Max number of iterations for OpenMM energy minimization (default: 0)")

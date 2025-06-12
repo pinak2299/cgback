@@ -532,6 +532,7 @@ class Backmapper:
                 self.args.energy_minimization_tolerance,
                 self.args.energy_minimization_log_interval,
                 self.args.energy_minimization_ignore_existing,
+                self.args.energy_minimization_device,
                 self.logger
             )
         except Exception as e:
