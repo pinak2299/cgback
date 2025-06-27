@@ -238,7 +238,7 @@ cgback input.pdb --skip-add-hydrogen --skip-fix-structure
 ## ✨ Extra Usage
 
 CGBack can act as a lightweight structure‑repair tool, no coarse‑grained input required.
-Here are four handy one‑liners you can drop into your workflow:
+Here are three handy one‑liners you can drop into your workflow:
 
 1. Add missing hydrogen atoms:
 
