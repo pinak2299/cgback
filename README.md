@@ -277,7 +277,7 @@ It also scans all chiral centers and regenerates one in the canonical form. Comb
 
 If you use CGBack in your research, please cite the following paper:
 > Ugarte La Torre, D., Sugita, Y.; CGBack: Diffusion Model for Backmapping Large-Scale and Complex
-> Coarse-Grained Molecular Systems, bioRxiv 2025.06.04.657965; doi: https://doi.org/10.1101/2025.06.04.657965
+> Coarse-Grained Molecular Systems, Journal of Chemical Information and Modeling; DOI: 10.1021/acs.jcim.5c01281
 
 ## 📫 Contact
 
