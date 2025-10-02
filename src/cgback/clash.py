@@ -78,5 +78,9 @@ def find_clashes(system: System, neighbor_list: NDArray) -> list[tuple[int,int]]
         results = pool.starmap(find_clash, [(system, i, j) for i, j in neighbor_list])
 
     clashes = [result for result in results if result is not None]
-
+    # clashes: list[tuple[int, int]] = []
+    # for i, j in neighbor_list:
+    #     res = find_clash(system, int(i), int(j))
+    #     if res is not None:
+    #         clashes.append(res)
     return clashes

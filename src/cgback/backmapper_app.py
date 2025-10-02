@@ -44,6 +44,7 @@ def main() -> None:
     args = parser.parse_args()
 
     app = Backmapper(args)
+    print("Executing CGBack")
     app.run()
 
 

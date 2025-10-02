@@ -439,8 +439,13 @@ def find_penetration(system: System, ring_descriptor: RingDescriptor, neighbor_l
     return ring_descriptor.descriptor_index, -1
 
 def find_penetrations(system: System, ring_descriptors: list[RingDescriptor], neighbor_list: NDArray) -> list[tuple[int,int]]:
-    with multiprocessing.Pool() as pool:
-       results = pool.starmap(find_penetration, [(system, ring_descriptor, neighbor_list) for ring_descriptor in ring_descriptors])
+    num_workers = 4
+    # try:
+    #     with multiprocessing.Pool() as pool:
+    #         results = pool.starmap(find_penetration, [(system, ring_descriptor, neighbor_list) for ring_descriptor in ring_descriptors])
+    # except Exception as e:
+        # Fallback to sequential if multiprocessing fails
+    results = [find_penetration(system, ring_descriptor, neighbor_list) for ring_descriptor in ring_descriptors]
 
     penetrations = [result for result in results if result[1] != -1]
 
