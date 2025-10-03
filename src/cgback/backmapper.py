@@ -50,19 +50,19 @@ class Backmapper:
         self.device = torch.device(self.args.device)
 
         # Add GPU debugging information
-        if "cuda" in str(self.device):
-            if torch.cuda.is_available():
-                self.logger.debug(f"CUDA available: {torch.cuda.is_available()}")
-                self.logger.debug(f"CUDA device count: {torch.cuda.device_count()}")
-                if self.device.index is not None:
-                    self.logger.debug(f"Selected GPU: {self.device.index}")
-                    if self.device.index >= torch.cuda.device_count():
-                        raise RuntimeError(f"GPU {self.device.index} not available. Available GPUs: 0-{torch.cuda.device_count()-1}")
-                else:
-                    self.logger.debug(f"Using default CUDA device")
-                self.logger.debug(f"GPU memory before model loading: {torch.cuda.get_device_properties(self.device).total_memory / 1024**3:.1f} GB total")
-            else:
-                raise RuntimeError("CUDA requested but not available")
+        # if "cuda" in str(self.device):
+        #     if torch.cuda.is_available():
+        #         self.logger.debug(f"CUDA available: {torch.cuda.is_available()}")
+        #         self.logger.debug(f"CUDA device count: {torch.cuda.device_count()}")
+        #         if self.device.index is not None:
+        #             self.logger.debug(f"Selected GPU: {self.device.index}")
+        #             if self.device.index >= torch.cuda.device_count():
+        #                 raise RuntimeError(f"GPU {self.device.index} not available. Available GPUs: 0-{torch.cuda.device_count()-1}")
+        #         else:
+        #             self.logger.debug(f"Using default CUDA device")
+        #         self.logger.debug(f"GPU memory before model loading: {torch.cuda.get_device_properties(self.device).total_memory / 1024**3:.1f} GB total")
+        #     else:
+        #         raise RuntimeError("CUDA requested but not available")
 
         # Step 6: Setup model
         self.diffuser = None
@@ -96,7 +96,7 @@ class Backmapper:
         self.logger.info(f"Input: '{self.args.INPUT}'")
         self.logger.info(f"Output: '{self.args.output}'")
         self.logger.info(f"Batch size: {self.args.batch}")
-        self.logger.info(f"Device: {self.args.device}")
+        # self.logger.info(f"Device: {self.args.device}")
         self.logger.info(f"Seed: {self.args.seed}")
         self.logger.info(f"Ignore existing atoms: {self.args.ignore_existing}")
         if self.args.skip_sampling: self.logger.info(f"Skip sampling: {self.args.skip_sampling}")
@@ -132,9 +132,10 @@ class Backmapper:
         del self.model
         # if self.args.device == "cuda": torch.cuda.empty_cache()
         # Improved GPU memory cleanup
-        if "cuda" in str(self.device):
-            torch.cuda.empty_cache()
-            torch.cuda.synchronize()
+        # if "cuda" in str(self.device):
+        #     torch.cuda.empty_cache()
+        #     torch.cuda.synchronize()
+        if self.args.device == "cuda": torch.cuda.empty_cache()
         gc.collect()
 
         self.num_timesteps = None
@@ -148,24 +149,32 @@ class Backmapper:
         self.logger.info("Unloaded model")
 
     def prepare_model(self):
-        try:
-            # Set the specific GPU device if using CUDA
-            if "cuda" in str(self.device) and self.device.index is not None:
-                torch.cuda.set_device(self.device.index)
+        # try:
+        #     # Set the specific GPU device if using CUDA
+        #     if "cuda" in str(self.device) and self.device.index is not None:
+        #         torch.cuda.set_device(self.device.index)
             
+        #     self.model = self.model.to(self.device)
+        #     self.logger.info(f"Using device: {self.device}")
+        #     self.logger.debug(f"model sent to device {self.device}")
+            
+        #     # Log GPU memory usage after model loading
+        #     if "cuda" in str(self.device):
+        #         memory_allocated = torch.cuda.memory_allocated(self.device) / 1024**3
+        #         self.logger.debug(f"GPU memory allocated after model loading: {memory_allocated:.1f} GB")
+                
+        # except RuntimeError as e:
+        #     self.logger.error(f"Failed to move model to device {self.device}: {e}")
+        #     if "cuda" in str(self.device):
+        #         self.logger.error("Try using CUDA_VISIBLE_DEVICES to restrict GPU access or specify a different GPU with --device cuda:N")
+        #     sys.exit(0)
+
+        try:
             self.model = self.model.to(self.device)
             self.logger.info(f"Using device: {self.device}")
             self.logger.debug(f"model sent to device {self.device}")
-            
-            # Log GPU memory usage after model loading
-            if "cuda" in str(self.device):
-                memory_allocated = torch.cuda.memory_allocated(self.device) / 1024**3
-                self.logger.debug(f"GPU memory allocated after model loading: {memory_allocated:.1f} GB")
-                
-        except RuntimeError as e:
-            self.logger.error(f"Failed to move model to device {self.device}: {e}")
-            if "cuda" in str(self.device):
-                self.logger.error("Try using CUDA_VISIBLE_DEVICES to restrict GPU access or specify a different GPU with --device cuda:N")
+        except RuntimeError:
+            self.logger.error(f"Device '{self.device}' is not available")
             sys.exit(0)
 
         self.checkpoint = torch.load(str(self.checkpoint_path), map_location=self.device, weights_only=False)
